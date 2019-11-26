@@ -36,6 +36,8 @@ class WorkflowTrackingServiceAdapter implements RunInfoDataInterface {
             serviceList.addAll(factory.getServicesOfType(ServiceType.WORKFLOW_TRACKING))
         }
         // cast them to the correct type
+        // refresh the workflowTrackingServices List
+        this.workflowTrackingServices.clear()
         for (service in serviceList) {
             this.workflowTrackingServices.add((WorkflowTrackingService) service)
         }
