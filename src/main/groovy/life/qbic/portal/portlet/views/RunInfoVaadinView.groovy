@@ -7,12 +7,12 @@ import com.vaadin.ui.*
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j2
 import life.qbic.portal.portlet.QBiCPortletUI
-import life.qbic.portal.portlet.infrastructure.WorkflowTrackingServiceAdapter
+import life.qbic.portal.portlet.adapters.RunInfoViewModel
 
 /**
  * Entry point for portlet workflow-dashboard. This class derives from {@link QBiCPortletUI}, which is found in the {@code portal-utils-lib} library.
  *
- * @see <ahref=https://github.com/qbicsoftware/portal-utils-lib>     portal-utils-lib</a>
+ * @see <ahref=https://github.com/qbicsoftware/portal-utils-lib>      portal-utils-lib</a>
  */
 @Theme("mytheme")
 @SuppressWarnings("serial")
@@ -20,6 +20,9 @@ import life.qbic.portal.portlet.infrastructure.WorkflowTrackingServiceAdapter
 @Log4j2
 @CompileStatic
 class RunInfoVaadinView extends QBiCPortletUI {
+    RunInfoViewModel runInfoViewModel
+
+
     @Override
     protected Layout getPortletContent(final VaadinRequest request) {
         log.info "Generating content for ${RunInfoVaadinView}"
@@ -28,8 +31,6 @@ class RunInfoVaadinView extends QBiCPortletUI {
         //       this method returns any non-null layout to avoid a NullPointerException later on
         def layout = new VerticalLayout()
 
-        // TODO remove
-        WorkflowTrackingServiceAdapter workflowTrackingServiceAdapter = new WorkflowTrackingServiceAdapter()
 
         def name = new TextField()
         name.setCaption("Type your name here:")

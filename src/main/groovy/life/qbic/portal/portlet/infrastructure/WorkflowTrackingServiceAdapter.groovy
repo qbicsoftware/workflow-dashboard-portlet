@@ -5,7 +5,7 @@ import groovy.util.logging.Log4j2
 import io.micronaut.http.client.exceptions.HttpClientException
 import life.qbic.datamodel.workflows.RunInfo
 import life.qbic.portal.portlet.entities.WorkflowTrackingService
-import life.qbic.portal.portlet.usecases.RetrieveAllRunInfo.RunInfoDataInterface
+import life.qbic.portal.portlet.usecases.RetrieveAllRunInfo.RunInfoDataSourceInterface
 import life.qbic.portal.utils.ConfigurationManagerFactory
 import life.qbic.services.ConsulServiceFactory
 import life.qbic.services.ServiceConnector
@@ -13,7 +13,7 @@ import life.qbic.services.ServiceType
 import life.qbic.services.connectors.ConsulConnector
 
 @Log4j2
-class WorkflowTrackingServiceAdapter implements RunInfoDataInterface {
+class WorkflowTrackingServiceAdapter implements RunInfoDataSourceInterface {
 
     private URL serviceRegistryUrl
     private List<WorkflowTrackingService> workflowTrackingServices
@@ -64,10 +64,13 @@ class WorkflowTrackingServiceAdapter implements RunInfoDataInterface {
         if (this.workflowTrackingServices.isEmpty()) {
             refreshWorkflowTrackingServices()
         }
+        // there should not be an empty list at this point
+        assert workflowTrackingServices.size() > 0
 
         for (service in this.workflowTrackingServices) {
             try {
-                workflowRunInfoList = parser.parse(service.getWorkflowListEndpoint())
+                workflowRunInfoList = parser.parse(service.getWorkflowListEndpoint()) as List<RunInfo>
+                log.info("Successfully loaded list of workflow RunInfo of size {}.", workflowRunInfoList.size())
                 break
             } catch (HttpClientException e) {
                 log.error("Could not connect to {} because of {}", service.getWorkflowListEndpoint(), e
