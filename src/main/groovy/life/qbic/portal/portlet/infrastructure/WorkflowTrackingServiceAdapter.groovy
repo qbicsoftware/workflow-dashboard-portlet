@@ -59,9 +59,9 @@ class WorkflowTrackingServiceAdapter implements RunInfoDataInterface {
     @Override
     List<RunInfo> requestListOfWorkflowRunInfo() {
         def parser = new JsonSlurper()
-        def List<RunInfo> workflowRunInfoList = []
+        List<RunInfo> workflowRunInfoList = []
 
-        if (this.workflowTrackingServices.isEmpty()){
+        if (this.workflowTrackingServices.isEmpty()) {
             refreshWorkflowTrackingServices()
         }
 

@@ -12,7 +12,7 @@ import life.qbic.portal.portlet.infrastructure.WorkflowTrackingServiceAdapter
 /**
  * Entry point for portlet workflow-dashboard. This class derives from {@link QBiCPortletUI}, which is found in the {@code portal-utils-lib} library.
  *
- * @see <ahref=https://github.com/qbicsoftware/portal-utils-lib>    portal-utils-lib</a>
+ * @see <ahref=https://github.com/qbicsoftware/portal-utils-lib>     portal-utils-lib</a>
  */
 @Theme("mytheme")
 @SuppressWarnings("serial")
