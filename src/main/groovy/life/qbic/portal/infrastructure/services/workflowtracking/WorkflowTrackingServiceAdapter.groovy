@@ -1,17 +1,17 @@
-package life.qbic.portal.portlet.infrastructure
+package life.qbic.portal.infrastructure.services.workflowtracking
 
 import groovy.json.JsonSlurper
 import groovy.util.logging.Log4j2
 import io.micronaut.http.client.exceptions.HttpClientException
 import life.qbic.datamodel.workflows.RunInfo
-import life.qbic.portal.portlet.entities.WorkflowTrackingService
-import life.qbic.portal.portlet.usecases.RetrieveAllRunInfo.RunInfoDataSourceInterface
+import life.qbic.portal.domain.deprecated.RunInfoDataSourceInterface
 import life.qbic.portal.utils.ConfigurationManagerFactory
 import life.qbic.services.ConsulServiceFactory
 import life.qbic.services.ServiceConnector
 import life.qbic.services.ServiceType
 import life.qbic.services.connectors.ConsulConnector
 
+@Deprecated
 @Log4j2
 class WorkflowTrackingServiceAdapter implements RunInfoDataSourceInterface {
 

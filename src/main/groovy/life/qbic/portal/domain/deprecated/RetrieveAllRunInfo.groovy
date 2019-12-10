@@ -1,4 +1,4 @@
-package life.qbic.portal.portlet.usecases.RetrieveAllRunInfo
+package life.qbic.portal.domain.deprecated
 
 import life.qbic.datamodel.workflows.RunInfo
 
@@ -15,9 +15,9 @@ class RetrieveAllRunInfo {
     def execute() {
         def workflowRunInfoList = this.runInfoDataSource.requestListOfWorkflowRunInfo()
         if (isWorkflowRunInfoListValid(workflowRunInfoList)) {
+            // pass the output to the presenter
             this.retrieveAllRunInfoOutputBoundary.receiveRunInfoList(workflowRunInfoList)
         }
-
     }
 
     private static boolean isWorkflowRunInfoListValid(List<RunInfo> workflowRunInfoList) {

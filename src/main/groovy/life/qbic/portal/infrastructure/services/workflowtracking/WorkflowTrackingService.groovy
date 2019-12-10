@@ -1,4 +1,4 @@
-package life.qbic.portal.portlet.entities
+package life.qbic.portal.infrastructure.services.workflowtracking
 
 import life.qbic.services.Service
 import life.qbic.services.ServiceType

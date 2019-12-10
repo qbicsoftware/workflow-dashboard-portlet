@@ -1,4 +1,4 @@
-package life.qbic.portal.portlet.usecases.RetrieveAllRunInfo
+package life.qbic.portal.domain.deprecated
 
 import life.qbic.datamodel.workflows.RunInfo
 
