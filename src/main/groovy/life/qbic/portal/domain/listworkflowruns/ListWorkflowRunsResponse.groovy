@@ -1,4 +1,5 @@
 package life.qbic.portal.domain.listworkflowruns
 
-class ListWorkflowRunsResponse {
+class ListWorkflowRunsResponse extends ArrayList<WorkflowRun> {
+
 }
