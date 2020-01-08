@@ -11,7 +11,7 @@ import life.qbic.services.connectors.ConsulConnector
 class ServiceFinder {
 
     static List<Service> findWorkflowTrackingServices(URL serviceRegistryUrl) throws NullPointerException {
-        ServiceConnector connector = new ConsulConnector()
+        ServiceConnector connector = new ConsulConnector(serviceRegistryUrl)
         def serviceList = []
 
         connector.withCloseable {
