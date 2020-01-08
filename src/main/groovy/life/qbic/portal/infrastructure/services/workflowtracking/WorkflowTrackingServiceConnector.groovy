@@ -3,6 +3,8 @@ package life.qbic.portal.infrastructure.services.workflowtracking
 import groovy.json.JsonSlurper
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.RxHttpClient
+import life.qbic.datamodel.workflows.RunInfo
+import life.qbic.datamodel.workflows.Trace
 import life.qbic.portal.domain.listworkflowruns.WorkflowTrackingDataSource
 import life.qbic.services.Service
 
@@ -27,14 +29,16 @@ class WorkflowTrackingServiceConnector implements WorkflowTrackingDataSource {
     }
 
     @Override
-    def listAllWorkflowRunInfo() {
+    List<RunInfo> listAllWorkflowRunInfo() {
         URL listWorkflowRunsURL = new URL(this.workflowTrackingService.getRootUrl() + Endpoints.WORKFLOW_LIST)
-        return queryServiceEndpoint(listWorkflowRunsURL)
+        def response = queryServiceEndpoint(listWorkflowRunsURL)
+        return response as List<RunInfo>
     }
 
     @Override
-    def listTracesForRunId(String runId) {
+    List<Trace> listTracesForRunId(String runId) {
         URL listTracesURL = new URL(this.workflowTrackingService.getRootUrl() + Endpoints.WORKFLOW_TRACES + runId)
-        return queryServiceEndpoint(listTracesURL)
+        def response = queryServiceEndpoint(listTracesURL)
+        return response as List<Trace>
     }
 }
