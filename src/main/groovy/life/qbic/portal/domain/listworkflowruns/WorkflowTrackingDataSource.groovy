@@ -3,7 +3,7 @@ package life.qbic.portal.domain.listworkflowruns
 interface WorkflowTrackingDataSource {
 
 
-    def listAllWorkflowRunInfo()
+    List<RunInfo> listAllWorkflowRunInfo()
     def listTracesForRunId(String runId)
 
 }
