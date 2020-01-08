@@ -1,7 +1,6 @@
 package life.qbic.portal.infrastructure.services
 
 import groovy.util.logging.Log4j2
-import life.qbic.portal.utils.ConfigurationManagerFactory
 import life.qbic.services.ConsulServiceFactory
 import life.qbic.services.Service
 import life.qbic.services.ServiceConnector
