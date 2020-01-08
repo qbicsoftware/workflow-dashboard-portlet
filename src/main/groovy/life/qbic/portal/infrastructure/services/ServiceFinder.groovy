@@ -21,13 +21,9 @@ class ServiceFinder {
         }
 
         if (serviceList.isEmpty()) {
-            def nullPointer = new NullPointerException("No workflow tracking service was found in repository: " + this.serviceRegistryURL.getText())
-            log.error(nullPointer.getMessage())
-            throw nullPointer
-        } else {
-            log.info("Found at least one workflow tracking service.")
-            log.debug("Address of first service: " + serviceList.get(0).getRootUrl())
+            log.warn("Could not find a workflow tracking service in the repository. Returning empty List.")
         }
+
         return serviceList
     }
 }
