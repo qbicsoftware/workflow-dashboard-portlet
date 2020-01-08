@@ -16,11 +16,14 @@ import life.qbic.services.connectors.ConsulConnector
 class WorkflowTrackingServiceConnector implements WorkflowTrackingDataSource {
 
     URL serviceRegistryURL
-    List<WorkflowTrackingService> workflowTrackingServiceList
+    List<Service> workflowTrackingServiceList
 
-    WorkflowTrackingServiceConnector() {
+    private Service workflowTrackingService
+
+    WorkflowTrackingServiceConnector(Service workflowTrackingService) {
         this.serviceRegistryURL = loadServiceRegistryURLFromConfig()
         this.workflowTrackingServiceList = listWorkflowTrackingServices()
+        this.workflowTrackingService = workflowTrackingService
     }
 
     private URL loadServiceRegistryURLFromConfig() {
@@ -32,18 +35,13 @@ class WorkflowTrackingServiceConnector implements WorkflowTrackingDataSource {
     private def listWorkflowTrackingServices() {
         ServiceConnector connector = new ConsulConnector(this.serviceRegistryURL)
         def serviceList = []
-        def workflowTrackingServiceList = []
 
         connector.withCloseable {
             ConsulServiceFactory factory = new ConsulServiceFactory(it)
             serviceList.addAll(factory.getServicesOfType(ServiceType.WORKFLOW_TRACKING))
         }
 
-        for (service in serviceList) {
-            workflowTrackingServiceList.add(new WorkflowTrackingService((Service) service))
-        }
-
-        return workflowTrackingServiceList
+        return serviceList
     }
 
     static def queryServiceEndpoint(URL endpoint) {
@@ -53,20 +51,20 @@ class WorkflowTrackingServiceConnector implements WorkflowTrackingDataSource {
         def client = RxHttpClient.create(endpoint)
         def request = HttpRequest.GET(endpoint.toURI())
 
-        def response = client.withCloseable { it.toBlocking().retrieve(request) }
+        String response = client.withCloseable { it.toBlocking().retrieve(request) }
 
         return parser.parse(response.toCharArray())
     }
 
     @Override
     def listAllWorkflowRunInfo() {
-        WorkflowTrackingService workflowTrackingService = this.workflowTrackingServiceList.first()
-        return queryServiceEndpoint(workflowTrackingService.getWorkflowListEndpoint()) as List<RunInfo>
+        URL listWorkflowRunsURL = new URL(this.workflowTrackingService.getRootUrl() + WorkflowTrackingServiceEndpoints.WORKFLOW_LIST)
+        return queryServiceEndpoint(listWorkflowRunsURL)
     }
 
     @Override
     def listTracesForRunId(String runId) {
-        WorkflowTrackingService workflowTrackingService = this.workflowTrackingServiceList.first()
-        return queryServiceEndpoint(workflowTrackingService.getWorkflowTracesEndpoint(runId)) as List<Trace>
+        URL listTracesURL = new URL(this.workflowTrackingService.getRootUrl() + WorkflowTrackingServiceEndpoints.WORKFLOW_TRACES + runId)
+        return queryServiceEndpoint(listTracesURL)
     }
 }
