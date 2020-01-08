@@ -25,8 +25,8 @@ class WorkflowTrackingServiceConnector implements WorkflowTrackingDataSource {
 
     private URL loadServiceRegistryURLFromConfig() {
         def config = ConfigurationManagerFactory.getInstance()
-        def url_string = config.getServicesRegistryUrl()
-        return new URL(url_string)
+        def urlString = config.getServicesRegistryUrl()
+        return new URL(urlString)
     }
 
     private def listWorkflowTrackingServices() {
