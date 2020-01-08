@@ -4,6 +4,6 @@ interface WorkflowTrackingDataSource {
 
 
     List<RunInfo> listAllWorkflowRunInfo()
-    def listTracesForRunId(String runId)
+    List<Trace> listTracesForRunId(String runId)
 
 }
