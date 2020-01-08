@@ -15,21 +15,30 @@ class WorkflowTrackingService extends Service {
 
     WorkflowTrackingService(URL rootUrl) {
         super(ServiceType.WORKFLOW_TRACKING, rootUrl)
+        init()
+    }
+
+    WorkflowTrackingService(Service service) {
+        super(ServiceType.WORKFLOW_TRACKING, service.getRootUrl())
+        init()
+    }
+
+    def init() {
         this.workflowListEndpoint = new URL(this.rootUrl.toExternalForm() + '/workflows')
         this.workflowInfoRootURL = new URL(this.rootUrl.toExternalForm() + '/workflows/info')
         this.workflowTracesRootURL = new URL(this.rootUrl.toExternalForm() + '/workflows/traces')
         this.workflowMetadataRootURL = new URL(this.rootUrl.toExternalForm() + '/workflows/metadata')
     }
 
-    URL getWorkflowInfoEndpoint(def runID) {
-        return new URL(this.workflowInfoRootURL + '/' + runID)
+    URL getWorkflowInfoEndpoint(def runId) {
+        return new URL(this.workflowInfoRootURL + '/' + runId)
     }
 
-    URL getWorkflowTracesEndpoint(def runID) {
-        return new URL(this.workflowTracesRootURL + '/' + runID)
+    URL getWorkflowTracesEndpoint(def runId) {
+        return new URL(this.workflowTracesRootURL + '/' + runId)
     }
 
-    URL getWorkflowMetadataEndpoint(def runID) {
-        return new URL(this.workflowMetadataRootURL + '/' + runID)
+    URL getWorkflowMetadataEndpoint(def runId) {
+        return new URL(this.workflowMetadataRootURL + '/' + runId)
     }
 }
