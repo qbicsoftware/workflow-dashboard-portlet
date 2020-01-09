@@ -1,13 +1,18 @@
 package life.qbic.portal.infrastructure.services.workflowtracking
 
 import groovy.json.JsonSlurper
+import groovy.util.logging.Log4j2
 import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import life.qbic.datamodel.workflows.RunInfo
 import life.qbic.datamodel.workflows.Trace
 import life.qbic.portal.domain.listworkflowruns.WorkflowTrackingDataSource
 import life.qbic.services.Service
 
+@Log4j2
 class WorkflowTrackingServiceConnector implements WorkflowTrackingDataSource {
 
     private Service workflowTrackingService
@@ -23,9 +28,20 @@ class WorkflowTrackingServiceConnector implements WorkflowTrackingDataSource {
         def client = RxHttpClient.create(endpoint)
         def request = HttpRequest.GET(endpoint.toURI())
 
-        String response = client.withCloseable { it.toBlocking().retrieve(request) }
+        def parsedResponse
 
-        return parser.parse(response.toCharArray())
+        try {
+            def response = client.withCloseable { it.toBlocking().exchange(request, String) }
+            parsedResponse = parser.parseText(response.getBody() as String)
+        } catch (HttpClientResponseException e) {
+            log.error("Could not query service endpoint.")
+            if (e.getResponse().getStatus() != HttpStatus.OK) {
+                log.error("There was a problem with the Response code: " + e.getResponse().getStatus())
+            }
+            throw e
+        }
+
+        return parsedResponse
     }
 
     @Override
