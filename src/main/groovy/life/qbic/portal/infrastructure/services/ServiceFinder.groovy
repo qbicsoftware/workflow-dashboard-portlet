@@ -10,7 +10,7 @@ import life.qbic.services.connectors.ConsulConnector
 @Log4j2
 class ServiceFinder {
 
-    static List<Service> findWorkflowTrackingServices(URL serviceRegistryUrl) throws NullPointerException {
+    static List<Service> findWorkflowTrackingServices(URL serviceRegistryUrl) {
         ServiceConnector connector = new ConsulConnector(serviceRegistryUrl)
         def serviceList = []
 
