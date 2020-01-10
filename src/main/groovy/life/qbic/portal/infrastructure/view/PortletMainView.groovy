@@ -1,10 +1,9 @@
 package life.qbic.portal.infrastructure.view
 
-import com.vaadin.ui.Layout
+import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
-import life.qbic.portal.infrastructure.view.workflowruninfolist.WorkflowRunInfoListViewModelObserver
 
-class PortletMainView extends VerticalLayout implements WorkflowRunInfoListViewModelObserver, Layout {
+class PortletMainView extends VerticalLayout {
 
     PortletMainView() {
         super()
@@ -12,6 +11,7 @@ class PortletMainView extends VerticalLayout implements WorkflowRunInfoListViewM
     }
 
     private def createContent() {
-
+        TextField textField = new TextField("Test text", "Lorem ipsum and so on...")
+        this.addComponent(textField)
     }
 }

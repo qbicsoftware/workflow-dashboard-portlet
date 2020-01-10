@@ -3,7 +3,7 @@ package life.qbic.portal.infrastructure.view.workflowruninfolist
 
 import com.vaadin.ui.VerticalLayout
 
-class WorkflowRunInfoListView extends VerticalLayout implements WorkflowRunInfoListViewModelObserver {
+class WorkflowRunInfoListView extends VerticalLayout {
 
     private def viewModel
 

@@ -2,7 +2,7 @@ package life.qbic.portal.infrastructure.view.workflowruninfolist
 
 import life.qbic.portal.domain.listworkflowruns.ListWorkflowRunsInput
 
-class WorkflowRunInfoListController implements WorkflowRunInfoListViewModelObserver{
+class WorkflowRunInfoListController {
 
     private def listWorkflowRunsInput
 
